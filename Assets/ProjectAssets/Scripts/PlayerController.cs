@@ -1,11 +1,13 @@
 using System;
+using ProjectAssets.Scripts.States;
 using UnityEngine;
 using UnityEngine.Assertions;
+using Zenject;
 
 namespace ProjectAssets.Scripts
 {
     [RequireComponent(typeof(Rigidbody2D))]
-    public class ObjectMover : MonoBehaviour
+    public class PlayerController : MonoBehaviour
     {
         [SerializeField] private float _speed = 5f;
         [SerializeField] private float _jumpForce = 20f;
@@ -14,6 +16,8 @@ namespace ProjectAssets.Scripts
 
         private float _horizontalInput = 0;
         private bool _isGrounded;
+        
+        [Inject] private readonly PlayerState _playerState;
 
         private void Awake()
         {
@@ -27,18 +31,6 @@ namespace ProjectAssets.Scripts
             // get horizontal direction 1 - move right; -1 - move left
             _horizontalInput = Input.GetAxis("Horizontal");
             _rigidbody.linearVelocityX = _horizontalInput *_speed;
-            
-            // alternative movement
-            // if (Input.GetKey(KeyCode.D))
-            // {
-            //     // move right with pressed 'D'
-            //     _rigidbody.linearVelocityX = _horizontalInput *_speed;
-            // }
-            // else if (Input.GetKey(KeyCode.A))
-            // {
-            //     // move left with pressed 'A'
-            //     _rigidbody.linearVelocityX = -_speed;
-            // }
             
             if (Input.GetKeyDown(KeyCode.Space) && _isGrounded)
             {
@@ -54,6 +46,16 @@ namespace ProjectAssets.Scripts
             {
                 _isGrounded = true;
             }
+
+            if (other.gameObject.CompareTag("Obstacle"))
+            {
+                Debug.LogError($"Obstacle entered. HP: {_playerState.HealthPoints} | Lives: {_playerState.LivesCount}");
+                // get player state
+                // check health Points
+                // start decreasing health points
+            }
         }
+        
+        
     }
 }
