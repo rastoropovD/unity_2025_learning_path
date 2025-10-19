@@ -13,7 +13,7 @@ namespace ProjectAssets.Scripts.Behaviors
         {
             // read save file from device
             
-            Debug.LogError($"PlayerState is null ? {_playerState == null}");
+            // Debug.LogError($"PlayerState is null ? {_playerState == null}");
             
             // show player lives ui
             // show player HP ui

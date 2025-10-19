@@ -9,6 +9,7 @@ namespace ProjectAssets.Scripts
     [RequireComponent(typeof(Rigidbody2D))]
     public class PlayerController : MonoBehaviour
     {
+        [SerializeField] private PlayerHealthController _healthController;
         [SerializeField] private float _speed = 5f;
         [SerializeField] private float _jumpForce = 20f;
 
@@ -50,12 +51,20 @@ namespace ProjectAssets.Scripts
             if (other.gameObject.CompareTag("Obstacle"))
             {
                 Debug.LogError($"Obstacle entered. HP: {_playerState.HealthPoints} | Lives: {_playerState.LivesCount}");
+                _healthController.UpdateHealth(10); // 10 update to variable and decrease it
+                // get player state
+                // check health Points
+                // start decreasing health points
+            }
+            
+            if (other.gameObject.CompareTag("Health"))
+            {
+                Debug.LogError($"Health entered. HP: {_playerState.HealthPoints} | Lives: {_playerState.LivesCount}");
+                _healthController.UpdateHealth(10); // 10 update to variable and increase it
                 // get player state
                 // check health Points
                 // start decreasing health points
             }
         }
-        
-        
     }
 }
